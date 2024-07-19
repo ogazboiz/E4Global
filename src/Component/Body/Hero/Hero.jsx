@@ -4,7 +4,7 @@ import car from "../../../assets/Images/car.png"
 import carText from "../../../assets/Images/logo1.png"
 function Hero() {
   return (
-    <div className="bg-gradient-to-r from-orange-400 to-red-500 min-h-screen flex items-center justify-center">
+    <div className="bg-gradient-to-r from-orange-400 to-red-500 min-h-[562px] flex items-center justify-center">
       <div className="container mx-auto text-center">
         <div className=" p-10 rounded-lg flex items-center">
           <div className="text-center ml-40">
