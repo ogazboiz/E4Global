@@ -1,8 +1,11 @@
+import Track from "../Component/Body/Track/Track"
 
 
 function Home() {
   return (
-    <div className="">Home</div>
+    <div>
+      <Track/>
+    </div>
   )
 }
 
