@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 
 import { AuthProvider } from './context/AuthContext';
@@ -22,8 +22,8 @@ function App() {
         <Routes>
           <Route path='/' element={<RootLayout />}>
             <Route index element={<Home />} />
-            <Route path='/adminlogin' element={<AdminLogin />} />
           </Route>
+          <Route path="/admin/login" element={<AdminLogin />} />
           <Route path='/admin' element={<AdminLayout />}>
             <Route path='dashboard' element={
               <PrivateRoute>
@@ -55,6 +55,10 @@ function App() {
                 <Logout />
               </PrivateRoute>
             } />
+            <Route
+              path=""
+              element={<Navigate to="login" />}
+            />
           </Route>
         </Routes>
       </Router>
