@@ -25,7 +25,6 @@ function App() {
           </Route>
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path='/admin' element={<AdminLayout />}>
-            <Route path='login' element={<AdminLogin />} />
             <Route path='dashboard' element={
               <PrivateRoute>
                 <AdminDashboard />
