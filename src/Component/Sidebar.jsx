@@ -3,25 +3,44 @@ import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
-    <div className="bg-gray-200 min-h-screen p-4">
+    <div className="bg-gradient-to-r from-orange-500 to-orange-400 min-h-screen p-6 text-white">
+     
       <ul className="space-y-4">
         <li>
-          <Link to="/admin/dashboard" className="block p-2 text-gray-700 hover:bg-gray-300 rounded">Dashboard</Link>
+          <Link to="/admin/dashboard" className="flex items-center p-2 hover:bg-orange-600 rounded">
+            <span className="material-icons">dashboard</span>
+            <span className="ml-3">Dashboard</span>
+          </Link>
         </li>
         <li>
-          <Link to="/admin/customer" className="block p-2 text-gray-700 hover:bg-gray-300 rounded">Customer</Link>
+          <Link to="/admin/customer" className="flex items-center p-2 hover:bg-orange-600 rounded">
+            <span className="material-icons">people</span>
+            <span className="ml-3">Customers</span>
+          </Link>
         </li>
         <li>
-          <Link to="/admin/order" className="block p-2 text-gray-700 hover:bg-gray-300 rounded">Order</Link>
+          <Link to="/admin/order" className="flex items-center p-2 hover:bg-orange-600 rounded">
+            <span className="material-icons">shopping_cart</span>
+            <span className="ml-3">Orders</span>
+          </Link>
         </li>
         <li>
-          <Link to="/admin/inventory" className="block p-2 text-gray-700 hover:bg-gray-300 rounded">Inventory</Link>
+          <Link to="/admin/inventory" className="flex items-center p-2 hover:bg-orange-600 rounded">
+            <span className="material-icons">inventory</span>
+            <span className="ml-3">Inventory</span>
+          </Link>
         </li>
         <li>
-          <Link to="/admin/tracking" className="block p-2 text-gray-700 hover:bg-gray-300 rounded">Tracking</Link>
+          <Link to="/admin/tracking" className="flex items-center p-2 hover:bg-orange-600 rounded">
+            <span className="material-icons">local_shipping</span>
+            <span className="ml-3">Tracking</span>
+          </Link>
         </li>
         <li>
-          <Link to="/admin/logout" className="block p-2 text-gray-700 hover:bg-gray-300 rounded">Log Out</Link>
+          <Link to="/admin/logout" className="flex items-center p-2 hover:bg-orange-600 rounded">
+            <span className="material-icons">logout</span>
+            <span className="ml-3">Log Out</span>
+          </Link>
         </li>
       </ul>
     </div>

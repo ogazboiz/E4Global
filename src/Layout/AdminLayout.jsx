@@ -1,15 +1,11 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../Component/Sidebar';
-
+import Header from "../Component/Navbar/Header";
 function AdminLayout() {
   return (
     <>
-    <header className="bg-gray-800 p-4 text-white">
-          <div className="container mx-auto">
-            <h1 className="text-2xl">Admin Dashboard</h1>
-          </div>
-        </header>
+    <Header/>
     <div className="flex">
       <Sidebar />
       <div className="flex-1">
