@@ -1,8 +1,11 @@
+import Inventorys from "../Component/Inventory/Inventory"
 
 
 function Inventory() {
   return (
-    <div>Inventory</div>
+    <div>
+      <Inventorys/>
+    </div>
   )
 }
 

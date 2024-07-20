@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import car from "../assets/Images/car.png";
@@ -35,19 +35,19 @@ function AdminLogin() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-orange-400 to-red-500 min-h-screen flex items-center justify-center">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-orange-400 to-red-500">
       <div className="container mx-auto text-left">
-        <div className=" p-10 rounded-lg w-1/2">
-          <h1 className="text-3xl font-bold mb-4">Login</h1>
+        <div className="w-1/2 p-10 rounded-lg ">
+          <h1 className="mb-4 text-3xl font-bold">Login</h1>
           <p className="mb-6">Welcome, kindly enter your details</p>
-          {error && <p className="text-red-500 mb-4">{error}</p>}
+          {error && <p className="mb-4 text-red-500">{error}</p>}
           <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
             <div className="mb-4">
-              <label className="block text-left text-sm font-bold mb-2" htmlFor="email">
+              <label className="block mb-2 text-sm font-bold text-left" htmlFor="email">
                 Email
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                 id="email"
                 type="email"
                 placeholder="kateholt@gmail.com"
@@ -56,11 +56,11 @@ function AdminLogin() {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-left text-sm font-bold mb-2" htmlFor="password">
+              <label className="block mb-2 text-sm font-bold text-left" htmlFor="password">
                 Password
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                 id="password"
                 type="password"
                 placeholder="Password"
@@ -74,7 +74,7 @@ function AdminLogin() {
                 <span className="text-sm">Remember me</span>
               </label>
               <a
-                className="inline-block align-baseline font-bold text-sm text-gray-700 hover:text-orange-800"
+                className="inline-block text-sm font-bold text-gray-700 align-baseline hover:text-orange-800"
                 href="#"
               >
                 Forgot Password?

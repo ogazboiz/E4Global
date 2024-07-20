@@ -1,9 +1,13 @@
-import React from 'react'
+import OrderDetails from "../Component/Track/OrderDetails";
+import MapComponent from "../Component/Map/Map";
 
 function Tracking() {
   return (
-    <div>Tracking</div>
-  )
+    <div className="mt-8">
+      <OrderDetails />
+    
+    </div>
+  );
 }
 
-export default Tracking
+export default Tracking;
