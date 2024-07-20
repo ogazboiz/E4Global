@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import car from "../assets/Images/car.png";
 import carText from "../assets/Images/logo1.png";
 import "./adminlogin.css";
@@ -9,6 +10,7 @@ function AdminLogin() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   // Dummy login data
   const dummyData = [
@@ -23,7 +25,8 @@ function AdminLogin() {
     );
 
     if (user) {
-      // Successful login, navigate to admin dashboard
+      // Successful login, set authentication state and navigate to admin dashboard
+      login();
       navigate('/admin/dashboard');
     } else {
       // Show error message
@@ -34,7 +37,7 @@ function AdminLogin() {
   return (
     <div className="bg-gradient-to-r from-orange-400 to-red-500 min-h-screen flex items-center justify-center">
       <div className="container mx-auto text-left">
-        <div className="p-10 rounded-lg w-1/2">
+        <div className=" p-10 rounded-lg w-1/2">
           <h1 className="text-3xl font-bold mb-4">Login</h1>
           <p className="mb-6">Welcome, kindly enter your details</p>
           {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -80,7 +83,7 @@ function AdminLogin() {
             <div>
               <button
                 className="bg-orange-500 w-[382px] hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
-                type="submit" // Change type to "submit"
+                type="submit"
               >
                 Login
               </button>
@@ -88,12 +91,8 @@ function AdminLogin() {
           </form>
         </div>
         <div>
-          <img src={carText} alt="logo" className="car-logo-text" />
-          <img
-            src={car}
-            alt="Delivery Van"
-            className="ml-10 car-logo"
-          />
+          <img src={carText} alt="logo" className="car-logo-text"/>
+          <img src={car} alt="Delivery Van" className="ml-10 car-logo"/>
         </div>
       </div>
     </div>
