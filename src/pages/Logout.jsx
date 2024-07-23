@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-function Logout() {
-  return (
-    <div>Logout</div>
-  )
+const Logout = () => {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  useEffect(() => {
+    logout();
+    navigate('/admin/login', { replace: true });
+  }, [logout, navigate]);
+
+  return null; // Render nothing as it's a redirect component
 }
 
-export default Logout
+export default Logout;

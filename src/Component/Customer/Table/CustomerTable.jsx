@@ -1,18 +1,16 @@
-// CustomerTable.js
+import { Link } from 'react-router-dom';
 
 
-const CustomerTable = () => {
-  const customers = [
-    { name: 'Kate Holt', email: 'kateholt@gmail.com', phone: '081111111111', id: '9292' },
-    { name: 'Kate Holt', email: 'kateholt@gmail.com', phone: '081111111111', id: '9292' },
-    { name: 'Kate Holt', email: 'kateholt@gmail.com', phone: '081111111111', id: '9292' },
-    { name: 'Kate Holt', email: 'kateholt@gmail.com', phone: '081111111111', id: '9292' },
-    // Add more customer objects here
-  ];
-
+const CustomerTable = ({ customers }) => {
   return (
     <div className="p-4">
-      <button className="px-4 py-2 mb-4 text-white bg-orange-500 rounded-full">Add customer</button>
+      <div className="flex justify-end mb-4">
+        <Link to="/admin/customer/add">
+          <button className="px-4 py-2 text-white bg-orange-500 rounded-full">
+            Add customer
+          </button>
+        </Link>
+      </div>
       <div className="overflow-hidden bg-white rounded-lg shadow">
         <table className="min-w-full bg-white">
           <thead className='items-center gap'>

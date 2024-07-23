@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { useState } from 'react';
 import './App.css';
 
 import { AuthProvider } from './context/AuthContext';
@@ -14,8 +15,22 @@ import Inventory from './pages/Inventory';
 import Tracking from './pages/Tracking';
 import Logout from './pages/Logout';
 import PrivateRoute from './Component/PrivateRoute';
+import AddCustomerForm from './Component/Customer/Table/AddCustomerForm';
+// import AddCustomerForm from './pages/AddCustomerForm';
 
 function App() {
+  const [customers, setCustomers] = useState([
+    { name: 'Kate Holt', email: 'kateholt@gmail.com', phone: '081111111111', id: '9292' },
+    { name: 'uche ekezie', email: 'uche@gmail.com', phone: '0811111134431', id: '9292' },
+    { name: 'Akpolo prince', email: 'akpoloprince@gmail.com', phone: '081111111', id: '9292' },
+    { name: 'pascal joseph', email: 'pascalt@gmail.com', phone: '08134111111', id: '9292' },
+    // Add more initial customers if needed
+  ]);
+
+  const addCustomer = (newCustomer) => {
+    setCustomers((prevCustomers) => [...prevCustomers, newCustomer]);
+  };
+
   return (
     <AuthProvider>
       <Router>
@@ -32,7 +47,12 @@ function App() {
             } />
             <Route path='customer' element={
               <PrivateRoute>
-                <Customer />
+                <Customer customers={customers} />
+              </PrivateRoute>
+            } />
+            <Route path='customer/add' element={
+              <PrivateRoute>
+                <AddCustomerForm addCustomer={addCustomer} />
               </PrivateRoute>
             } />
             <Route path='order' element={
@@ -50,11 +70,7 @@ function App() {
                 <Tracking />
               </PrivateRoute>
             } />
-            <Route path='logout' element={
-              <PrivateRoute>
-                <Logout />
-              </PrivateRoute>
-            } />
+            <Route path='logout' element={<Logout />} />
             <Route
               path=""
               element={<Navigate to="login" />}
