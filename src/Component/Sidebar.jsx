@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
-    <div className="bg-gradient-to-r from-orange-500 to-orange-400 min-h-screen p-6 text-white">
-     
-      <ul className="space-y-4">
+    <div className="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-gradient-to-r from-orange-500 to-orange-400 p-6 text-white z-10 overflow-auto">
+      <ul className="space-y-4 mt-16">
         <li>
           <Link to="/admin/dashboard" className="flex items-center p-2 hover:bg-orange-600 rounded">
             <span className="material-icons">dashboard</span>

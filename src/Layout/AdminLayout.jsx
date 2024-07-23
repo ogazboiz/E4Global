@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../Component/Sidebar';
-import Header from "../Component/Navbar/Header";
+import Header from '../Component/Navbar/Header';
 
 function AdminLayout() {
   return (
@@ -9,10 +9,8 @@ function AdminLayout() {
       <Header />
       <div className="flex">
         <Sidebar />
-        <div className="flex-1">
-          <main className="p-10">
-            <Outlet />
-          </main>
+        <div className="flex-1 ml-64 mt-16 p-10 overflow-auto">
+          <Outlet />
         </div>
       </div>
     </>
