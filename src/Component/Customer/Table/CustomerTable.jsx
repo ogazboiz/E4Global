@@ -1,9 +1,37 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import CustomerStats from '../Stats/CustomerStats';
+// Import the CustomerStats component
 
-const CustomerTable = ({ customers }) => {
+const CustomerTable = () => {
+  const [customers, setCustomers] = useState([]);
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await axios.get('https://e4-global-backend.onrender.com/api/v1/customer/');
+        setCustomers(response.data.data); // Adjust this based on your actual API response structure
+      } catch (error) {
+        console.error('Error fetching customers:', error);
+      }
+    };
+
+    fetchCustomers();
+  }, []);
+
+  // Calculate customer statistics
+  const totalCustomers = customers.length;
+  const activeCustomers = customers.filter(customer => customer.status === 'active').length;
+  const inactiveCustomers = customers.filter(customer => customer.status === 'inactive').length;
+
   return (
     <div className="p-4">
+      <CustomerStats
+        totalCustomers={totalCustomers}
+        activeCustomers={activeCustomers}
+        inactiveCustomers={inactiveCustomers}
+      />
       <div className="flex justify-end mb-4">
         <Link to="/admin/customer/add">
           <button className="px-4 py-2 text-white bg-orange-500 rounded-full">
@@ -17,17 +45,13 @@ const CustomerTable = ({ customers }) => {
             <tr>
               <th className="px-4 py-2 border-b border-gray-200">Name</th>
               <th className="px-4 py-2 border-b border-gray-200">Email</th>
-              <th className="px-4 py-2 border-b border-gray-200">
-                Phone number
-              </th>
-              <th className="px-4 py-2 border-b border-gray-200">
-                Customer ID
-              </th>
+              <th className="px-4 py-2 border-b border-gray-200">Phone number</th>
+              <th className="px-4 py-2 border-b border-gray-200">Customer ID</th>
             </tr>
           </thead>
           <tbody className="text-center">
-            {customers.map((customer, index) => (
-              <tr key={index}>
+            {customers.map((customer) => (
+              <tr key={customer.id}>
                 <td className="px-4 py-2 border-b border-gray-200">
                   {customer.name}
                 </td>
@@ -35,10 +59,10 @@ const CustomerTable = ({ customers }) => {
                   {customer.email}
                 </td>
                 <td className="px-4 py-2 border-b border-gray-200">
-                  {customer.phone}
+                  {customer.phoneNumber}
                 </td>
                 <td className="px-4 py-2 border-b border-gray-200">
-                  {customer.id}
+                  {customer.customerId}
                 </td>
               </tr>
             ))}
@@ -47,17 +71,6 @@ const CustomerTable = ({ customers }) => {
       </div>
     </div>
   );
-};
-
-CustomerTable.propTypes = {
-  customers: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      email: PropTypes.string.isRequired,
-      phone: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 export default CustomerTable;

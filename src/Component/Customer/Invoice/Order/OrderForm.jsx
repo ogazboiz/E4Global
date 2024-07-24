@@ -1,28 +1,89 @@
-import axios from 'axios';
-import { useState } from 'react';
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const OrderForm = () => {
   const initialFormData = {
-    customerId: '',
-    recipientName: '',
-    orderId: '',
-    dropLocation: '',
-    shipmentDate: '',
-    packagingType: '',
-    totalWeight: '',
-    declaredValue: '',
-    status: 'pending',
+    customerId: "",
+    recipientName: "",
+    phoneNumber: "", // New field for phone number
+    orderId: "", // This will be set dynamically
+    dropLocation: "",
+    shipmentDate: "",
+    packagingType: "",
+    totalWeight: "",
+    declaredValue: "",
+
+    status: "pending",
     orderDescription: {
-      weight: '',
-      quantity: '',
-      descriptionOfContents: '',
-      unitValue: '',
+      weight: "",
+      quantity: "",
+      descriptionOfContents: "",
+      unitValue: "",
     },
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [customers, setCustomers] = useState([]);
+  const [customerNotFound, setCustomerNotFound] = useState(false);
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await axios.get(
+          "https://e4-global-backend.onrender.com/api/v1/customer/"
+        );
+        setCustomers(response.data.data);
+        console.log("Fetched customers:", response.data.data);
+      } catch (error) {
+        console.error("Error fetching customers:", error);
+      }
+    };
+
+    fetchCustomers();
+  }, []);
+
+  useEffect(() => {
+    const updateCustomerDetails = () => {
+      if (formData.customerId) {
+        const customer = customers.find(
+          (c) => c.customerId === formData.customerId
+        );
+
+        if (customer) {
+          setFormData((prevData) => ({
+            ...prevData,
+            recipientName: customer.name,
+            phoneNumber: customer.phoneNumber, // Update phone number
+          }));
+          setCustomerNotFound(false);
+        } else {
+          setFormData((prevData) => ({
+            ...prevData,
+            recipientName: "",
+            phoneNumber: "", // Clear phone number if customer not found
+          }));
+          setCustomerNotFound(true);
+        }
+      } else {
+        setFormData((prevData) => ({
+          ...prevData,
+          recipientName: "",
+          phoneNumber: "", // Clear phone number if no customerId
+        }));
+        setCustomerNotFound(false);
+      }
+    };
+
+    updateCustomerDetails();
+  }, [formData.customerId, customers]);
+
+  const generateOrderId = () => {
+    const prefix = "ORD";
+    const uniqueNumber = Math.floor(100000 + Math.random() * 900000); // Generates a number between 100000 and 999999
+    return `${prefix}${uniqueNumber}`;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,23 +108,46 @@ const OrderForm = () => {
     e.preventDefault();
 
     // Reset messages
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
+
+    // Check if customerId exists in the customer list
+    const customerExists = customers.some(
+      (customer) => customer.customerId === formData.customerId
+    );
+
+    if (!customerExists) {
+      setError("Customer ID not found.");
+      return;
+    }
+
+    // Generate a unique orderId
+    const orderId = generateOrderId();
+
+    // Update formData state to include the generated orderId
+    setFormData((prevData) => ({
+      ...prevData,
+      orderId: orderId,
+    }));
 
     try {
+      // Wait until formData is updated with the new orderId
       const response = await axios.post(
-        'https://e4-global-backend.onrender.com/api/v1/shipment/',
-        formData
+        "https://e4-global-backend.onrender.com/api/v1/shipment/",
+        { ...formData, orderId }
       );
 
-      console.log('Response:', response.data);
-      setSuccess('Order created successfully!');
-      
-      // Reset form data
-      setFormData(initialFormData);
+      console.log("Response:", response.data);
+      setSuccess("Order created successfully!");
+
+      // Reset form data except for the orderId
+      setFormData({
+        ...initialFormData,
+        orderId: orderId, // Keep the generated orderId
+      });
     } catch (error) {
-      console.error('Error:', error);
-      setError(error.response?.data?.message || 'Error Creating Order');
+      console.error("Error:", error);
+      setError(error.response?.data?.message || "Error Creating Order");
     }
   };
 
@@ -76,14 +160,20 @@ const OrderForm = () => {
         {success && (
           <div className="mb-4 text-center text-green-600">{success}</div>
         )}
-        {error && (
-          <div className="mb-4 text-center text-red-600">{error}</div>
+        {error && <div className="mb-4 text-center text-red-600">{error}</div>}
+        {customerNotFound && (
+          <div className="mb-4 text-center text-red-600">
+            Customer ID not found.
+          </div>
         )}
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-8">
             <div>
               <div className="mb-4">
-                <label className="block mb-2 text-sm font-semibold" htmlFor="customerId">
+                <label
+                  className="block mb-2 text-sm font-semibold"
+                  htmlFor="customerId"
+                >
                   Customer ID
                 </label>
                 <input
@@ -96,7 +186,10 @@ const OrderForm = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block mb-2 text-sm font-semibold" htmlFor="recipientName">
+                <label
+                  className="block mb-2 text-sm font-semibold"
+                  htmlFor="recipientName"
+                >
                   Recipient Name
                 </label>
                 <input
@@ -104,12 +197,31 @@ const OrderForm = () => {
                   id="recipientName"
                   name="recipientName"
                   value={formData.recipientName}
-                  onChange={handleChange}
+                  readOnly
                   className="w-full px-4 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
               <div className="mb-4">
-                <label className="block mb-2 text-sm font-semibold" htmlFor="orderId">
+                <label
+                  className="block mb-2 text-sm font-semibold"
+                  htmlFor="phoneNumber"
+                >
+                  Phone Number
+                </label>
+                <input
+                  type="text"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  readOnly
+                  className="w-full px-4 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  className="block mb-2 text-sm font-semibold"
+                  htmlFor="orderId"
+                >
                   Order ID
                 </label>
                 <input
@@ -117,12 +229,15 @@ const OrderForm = () => {
                   id="orderId"
                   name="orderId"
                   value={formData.orderId}
-                  onChange={handleChange}
+                  readOnly
                   className="w-full px-4 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
               <div className="mb-4">
-                <label className="block mb-2 text-sm font-semibold" htmlFor="dropLocation">
+                <label
+                  className="block mb-2 text-sm font-semibold"
+                  htmlFor="dropLocation"
+                >
                   Drop Location
                 </label>
                 <input
@@ -135,7 +250,10 @@ const OrderForm = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block mb-2 text-sm font-semibold" htmlFor="shipmentDate">
+                <label
+                  className="block mb-2 text-sm font-semibold"
+                  htmlFor="shipmentDate"
+                >
                   Shipment Date
                 </label>
                 <input
@@ -148,7 +266,10 @@ const OrderForm = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block mb-2 text-sm font-semibold" htmlFor="packagingType">
+                <label
+                  className="block mb-2 text-sm font-semibold"
+                  htmlFor="packagingType"
+                >
                   Packaging Type
                 </label>
                 <input
@@ -163,8 +284,11 @@ const OrderForm = () => {
             </div>
             <div>
               <div className="mb-4">
-                <label className="block mb-2 text-sm font-semibold" htmlFor="totalWeight">
-                  Total Weight
+                <label
+                  className="block mb-2 text-sm font-semibold"
+                  htmlFor="totalWeight"
+                >
+                  Weight
                 </label>
                 <input
                   type="number"
@@ -176,8 +300,11 @@ const OrderForm = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block mb-2 text-sm font-semibold" htmlFor="declaredValue">
-                  Declared Value
+                <label
+                  className="block mb-2 text-sm font-semibold"
+                  htmlFor="declaredValue"
+                >
+                  Amount
                 </label>
                 <input
                   type="number"
@@ -188,21 +315,12 @@ const OrderForm = () => {
                   className="w-full px-4 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
+
               <div className="mb-4">
-                <label className="block mb-2 text-sm font-semibold" htmlFor="weight">
-                  Weight
-                </label>
-                <input
-                  type="number"
-                  id="weight"
-                  name="weight"
-                  value={formData.orderDescription.weight}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-semibold" htmlFor="quantity">
+                <label
+                  className="block mb-2 text-sm font-semibold"
+                  htmlFor="quantity"
+                >
                   Quantity
                 </label>
                 <input
@@ -215,7 +333,10 @@ const OrderForm = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block mb-2 text-sm font-semibold" htmlFor="descriptionOfContents">
+                <label
+                  className="block mb-2 text-sm font-semibold"
+                  htmlFor="descriptionOfContents"
+                >
                   Description of Contents
                 </label>
                 <input
@@ -228,7 +349,10 @@ const OrderForm = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block mb-2 text-sm font-semibold" htmlFor="unitValue">
+                <label
+                  className="block mb-2 text-sm font-semibold"
+                  htmlFor="unitValue"
+                >
                   Unit Value
                 </label>
                 <input
@@ -242,12 +366,12 @@ const OrderForm = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center mt-6">
+          <div className="flex justify-end mt-6">
             <button
               type="submit"
-              className="px-6 py-2 text-white bg-orange-500 rounded-full hover:bg-orange-700"
+              className="px-4 py-2 font-semibold text-white bg-orange-500 rounded-lg hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500"
             >
-              Create Invoice
+              Create Order
             </button>
           </div>
         </form>
