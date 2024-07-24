@@ -1,6 +1,7 @@
-import  { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import axios from 'axios';
 import car from "../assets/Images/car.png";
 import carText from "../assets/Images/logo1.png";
 import "./adminlogin.css";
@@ -10,26 +11,28 @@ function AdminLogin() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { dispatch } = useAuth();
 
-  // Dummy login data
-  const dummyData = [
-    { email: 'admin1@example.com', password: 'password1' },
-    { email: 'admin2@example.com', password: 'password2' },
-  ];
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post("https://e4-global-backend.onrender.com/api/v1/auth/login", {
+        email,
+        password,
+      });
 
-  const handleLogin = () => {
-    // Check if the entered credentials match any in the dummy data
-    const user = dummyData.find(
-      (user) => user.email === email && user.password === password
-    );
+      console.log('Response:', response);  // Add this line to see the full response
+      const data = response.data;
+      console.log('Data:', data);  // Add this line to see the data object
 
-    if (user) {
-      // Successful login, set authentication state and navigate to admin dashboard
-      login();
-      navigate('/admin/dashboard');
-    } else {
-      // Show error message
+      if (data.token) {
+        dispatch({ type: 'LOGIN', payload: { email } });
+        localStorage.setItem('authToken', data.token);
+        navigate('/admin/dashboard');
+      } else {
+        setError('Invalid response from server');
+      }
+    } catch (error) {
+      console.error('Error:', error);
       setError('Invalid email or password');
     }
   };
