@@ -1,11 +1,14 @@
+import { useAuth } from '../context/AuthContext';
+
 const AdminDashboard = () => {
+  const { user } = useAuth();
   return (
     <div className="flex">
       <div className="flex-1">
         <main className="p-10">
           <div className="container mx-auto">
             <h2 className="mb-4 text-xl font-bold">
-              Welcome to the Admin Dashboard
+            Welcome to the Admin Dashboard, {user.name}
             </h2>
             <div className="grid grid-cols-1 gap-6 mb-6 md:grid-cols-3">
               <div className="p-4 bg-white rounded shadow-md">
