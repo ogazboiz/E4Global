@@ -1,4 +1,4 @@
-import React from 'react';
+
 import CustomerStats from "../Component/Customer/Stats/CustomerStats";
 import CustomerTable from "../Component/Customer/Table/CustomerTable";
 
