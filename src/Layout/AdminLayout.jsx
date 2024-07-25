@@ -1,12 +1,24 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from '../Component/Sidebar';
 import Header from '../Component/Navbar/Header';
 
+const routeNames = {
+  '/admin/dashboard': { name: 'Dashboard', icon: 'dashboard', placeholder: '', showSearch: true },
+  '/admin/customer': { name: 'Customers', icon: 'people', placeholder: 'search customer', showSearch: true },
+  '/admin/order': { name: 'Generate Order', icon: 'shopping_cart', placeholder: '', showSearch: false },
+  '/admin/inventory': { name: 'Inventory', icon: 'inventory', placeholder: 'search inventory', showSearch: true },
+  '/admin/tracking': { name: 'Tracking', icon: 'local_shipping', placeholder: '', showSearch: false },
+  '/admin/logout': { name: 'Log Out', icon: 'logout', placeholder: '', showSearch: false },
+};
+
 function AdminLayout() {
+  const location = useLocation();
+  const routeInfo = routeNames[location.pathname] || { name: 'Dashboard', icon: 'dashboard', placeholder: '', showSearch: true };
+
   return (
     <>
-      <Header />
+      <Header routeInfo={routeInfo} />
       <div className="flex">
         <Sidebar />
         <div className="flex-1 ml-64 mt-16 p-10 overflow-auto">

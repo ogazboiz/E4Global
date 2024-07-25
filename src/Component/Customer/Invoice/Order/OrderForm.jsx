@@ -12,10 +12,9 @@ const OrderForm = () => {
     packagingType: "",
     totalWeight: "",
     declaredValue: "",
-
     status: "pending",
     orderDescription: {
-      weight: "",
+      weight: "", // Add this field
       quantity: "",
       descriptionOfContents: "",
       unitValue: "",
@@ -134,7 +133,7 @@ const OrderForm = () => {
       // Wait until formData is updated with the new orderId
       const response = await axios.post(
         "https://e4-global-backend.onrender.com/api/v1/shipment/",
-        { ...formData, orderId }
+        { ...formData, orderId, orderDescription: { ...formData.orderDescription, weight: parseFloat(formData.orderDescription.weight) } } // Ensure weight is a number
       );
 
       console.log("Response:", response.data);
@@ -315,7 +314,22 @@ const OrderForm = () => {
                   className="w-full px-4 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
-
+              <div className="mb-4">
+                <label
+                  className="block mb-2 text-sm font-semibold"
+                  htmlFor="weight"
+                >
+                  Order Description Weight
+                </label>
+                <input
+                  type="number"
+                  id="weight"
+                  name="weight"
+                  value={formData.orderDescription.weight}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
+              </div>
               <div className="mb-4">
                 <label
                   className="block mb-2 text-sm font-semibold"

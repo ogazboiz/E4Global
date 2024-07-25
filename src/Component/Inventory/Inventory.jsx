@@ -1,7 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import CustomerStats from "../Customer/Stats/CustomerStats";
-// Import the CustomerStats component
 
 const Inventorys = () => {
   const [orders, setOrders] = useState([]);
@@ -11,16 +9,17 @@ const Inventorys = () => {
   const [customerCount, setCustomerCount] = useState(0);
 
   useEffect(() => {
-    const fetchOrdersAndCustomers = async () => {
+    const fetchOrders = async () => {
       try {
-        const ordersResponse = await axios.get(
+        const response = await axios.get(
           "https://e4-global-backend.onrender.com/api/v1/shipment/all"
         );
-        const fetchedOrders = Array.isArray(ordersResponse.data.data.shipments)
-          ? ordersResponse.data.data.shipments
+        const fetchedOrders = Array.isArray(response.data.data.shipments)
+          ? response.data.data.shipments
           : [];
         setOrders(fetchedOrders);
-
+        
+        // Fetch customers after orders are fetched
         const customersResponse = await axios.get(
           "https://e4-global-backend.onrender.com/api/v1/customer/"
         );
@@ -37,7 +36,7 @@ const Inventorys = () => {
       }
     };
 
-    fetchOrdersAndCustomers();
+    fetchOrders();
   }, []);
 
   const handleStatusChange = async (orderId, newStatus) => {
@@ -45,10 +44,10 @@ const Inventorys = () => {
       alert("Invalid status value");
       return;
     }
-
+    
     try {
       await axios.put(
-        `https://e4-global-backend.onrender.com/api/v1/shipment/${orderId}`,
+        "https://e4-global-backend.onrender.com/api/v1/shipment/${orderId}",
         { status: newStatus }
       );
       setOrders((prevOrders) =>
@@ -68,28 +67,12 @@ const Inventorys = () => {
     return customer ? customer.phoneNumber : "";
   };
 
-  // Calculate customer statistics
-  const totalCustomers = customers.length;
-  const activeCustomers = customers.filter(customer => {
-    const customerOrders = orders.filter(order => order.customerId === customer.customerId);
-    return customerOrders.some(order => order.status === 'intransit');
-  }).length;
-  const inactiveCustomers = customers.filter(customer => {
-    const customerOrders = orders.filter(order => order.customerId === customer.customerId);
-    return customerOrders.every(order => order.status === 'pending');
-  }).length;
-
   return (
     <div className="p-4">
       {loading && <p className="text-center">Loading...</p>}
       {error && <p className="text-center text-red-600">{error}</p>}
       {!loading && !error && (
         <>
-          <CustomerStats
-            totalCustomers={totalCustomers}
-            activeCustomers={activeCustomers}
-            inactiveCustomers={inactiveCustomers}
-          />
           <div className="grid grid-cols-4 gap-4 mb-4">
             <div className="p-4 text-center bg-white rounded shadow">
               <p className="text-gray-600">Total number of orders</p>
