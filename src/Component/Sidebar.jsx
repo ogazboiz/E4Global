@@ -1,45 +1,63 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
     <div className="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-gradient-to-r from-orange-500 to-orange-400 p-6 text-white z-10 overflow-auto">
       <ul className="space-y-4 mt-16">
         <li>
-          <Link to="/admin/dashboard" className="flex items-center p-2 hover:bg-orange-600 rounded">
+          <NavLink
+            to="/admin/dashboard"
+            className={({ isActive }) => `flex items-center p-2 rounded ${isActive ? 'bg-orange-600' : 'hover:bg-orange-600'}`}
+          >
             <span className="material-icons">dashboard</span>
             <span className="ml-3">Dashboard</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/admin/customer" className="flex items-center p-2 hover:bg-orange-600 rounded">
+          <NavLink
+            to="/admin/customer"
+            className={({ isActive }) => `flex items-center p-2 rounded ${isActive ? 'bg-orange-600' : 'hover:bg-orange-600'}`}
+          >
             <span className="material-icons">people</span>
             <span className="ml-3">Customers</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/admin/order" className="flex items-center p-2 hover:bg-orange-600 rounded">
+          <NavLink
+            to="/admin/order"
+            className={({ isActive }) => `flex items-center p-2 rounded ${isActive ? 'bg-orange-600' : 'hover:bg-orange-600'}`}
+          >
             <span className="material-icons">shopping_cart</span>
             <span className="ml-3">Orders</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/admin/inventory" className="flex items-center p-2 hover:bg-orange-600 rounded">
+          <NavLink
+            to="/admin/inventory"
+            className={({ isActive }) => `flex items-center p-2 rounded ${isActive ? 'bg-orange-600' : 'hover:bg-orange-600'}`}
+          >
             <span className="material-icons">inventory</span>
             <span className="ml-3">Inventory</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/admin/tracking" className="flex items-center p-2 hover:bg-orange-600 rounded">
+          <NavLink
+            to="/admin/tracking"
+            className={({ isActive }) => `flex items-center p-2 rounded ${isActive ? 'bg-orange-600' : 'hover:bg-orange-600'}`}
+          >
             <span className="material-icons">local_shipping</span>
             <span className="ml-3">Tracking</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/admin/logout" className="flex items-center p-2 hover:bg-orange-600 rounded">
+          <NavLink
+            to="/admin/login"
+            className={({ isActive }) => `flex items-center p-2 rounded ${isActive ? 'bg-orange-600' : 'hover:bg-orange-600'}`}
+          >
             <span className="material-icons">logout</span>
             <span className="ml-3">Log Out</span>
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </div>
