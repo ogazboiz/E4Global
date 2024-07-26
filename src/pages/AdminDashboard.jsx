@@ -50,7 +50,10 @@ const AdminDashboard = () => {
   }, []);
 
   const filteredTransactions = transactions.filter(transaction =>
-    transaction.recipientName.toLowerCase().includes(searchTerm.toLowerCase())
+    transaction.recipientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (transaction.orderId && transaction.orderId.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (transaction.customerId && transaction.customerId.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (transaction.customerName && transaction.customerName.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   return (
@@ -68,7 +71,7 @@ const AdminDashboard = () => {
               </div>
               <div className="p-4 bg-white rounded shadow-md">
                 <div className="text-3xl font-bold">{ordersCount}</div>
-                <div>Orders</div>
+                <div>Orders in Transit</div>
               </div>
               <div className="p-4 bg-white rounded shadow-md">
                 <div className="text-3xl font-bold">{inventoryCount}</div>
@@ -92,6 +95,7 @@ const AdminDashboard = () => {
                   {filteredTransactions.map((transaction, i) => (
                     <tr key={i}>
                       <td className="p-2 border-b">{transaction.orderId}</td>
+                      <td className="p-2 border-b hidden">{transaction.customerName}</td>
                       <td className="p-2 border-b">{new Date(transaction.shipmentDate).toLocaleDateString()}</td>
                       <td className="p-2 border-b">{transaction.status}</td>
                       <td className="p-2 border-b">{transaction.orderDescription.unitValue * transaction.orderDescription.quantity}</td>
