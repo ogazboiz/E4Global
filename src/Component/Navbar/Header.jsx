@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Header = ({ routeInfo }) => {
+const Header = ({ routeInfo, searchTerm, onSearchChange }) => {
+  const handleSearchChange = (e) => {
+    e.preventDefault()
+    onSearchChange(e.target.value);
+  };
+
   return (
     <header className="fixed top-0 left-0 w-full bg-gradient-to-r from-orange-500 to-orange-400 z-20">
       <div className="bg-white p-6 flex items-center shadow-md">
@@ -22,6 +27,8 @@ const Header = ({ routeInfo }) => {
               <input
                 type="text"
                 placeholder={routeInfo.placeholder || 'search'}
+                value={searchTerm}
+                onChange={handleSearchChange}
                 className="pl-10 w-[694px] h-[62px] pr-4 py-2 rounded-full bg-gray-200 text-gray-800"
               />
             </div>

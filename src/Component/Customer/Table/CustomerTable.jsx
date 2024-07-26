@@ -1,23 +1,26 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import CustomerStats from '../Stats/CustomerStats';
 
 const CustomerTable = () => {
   const [customers, setCustomers] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [customerStats, setCustomerStats] = useState({
     totalCustomers: 0,
     activeCustomers: 0,
-    inactiveCustomers: 0
+    inactiveCustomers: 0,
   });
+  const { searchTerm } = useOutletContext();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const customerResponse = await axios.get('https://e4-global-backend.onrender.com/api/v1/customer/');
-        const fetchedCustomers = customerResponse.data.data.reverse(); // Reverse the fetched customers
+        const fetchedCustomers = customerResponse.data.data.reverse();
         setCustomers(fetchedCustomers);
+        setFilteredCustomers(fetchedCustomers);
 
         const orderResponse = await axios.get('https://e4-global-backend.onrender.com/api/v1/shipment/all');
         const fetchedOrders = orderResponse.data.data.shipments;
@@ -31,6 +34,21 @@ const CustomerTable = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (searchTerm) {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+      const filtered = customers.filter(customer =>
+        customer.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+        customer.email.toLowerCase().includes(lowerCaseSearchTerm) ||
+        customer.phoneNumber.toString().toLowerCase().includes(lowerCaseSearchTerm) ||
+        customer.customerId.toLowerCase().includes(lowerCaseSearchTerm)
+      );
+      setFilteredCustomers(filtered);
+    } else {
+      setFilteredCustomers(customers);
+    }
+  }, [searchTerm, customers]);
 
   const updateCustomerStats = (customers, orders) => {
     const totalCustomers = customers.length;
@@ -67,7 +85,7 @@ const CustomerTable = () => {
             </tr>
           </thead>
           <tbody className="text-center">
-            {customers.map((customer) => (
+            {filteredCustomers.map((customer) => (
               <tr key={customer.customerId}>
                 <td className="px-4 py-2 border-b border-gray-200">{customer.name}</td>
                 <td className="px-4 py-2 border-b border-gray-200">{customer.email}</td>

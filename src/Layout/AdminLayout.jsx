@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from '../Component/Sidebar';
 import Header from '../Component/Navbar/Header';
@@ -14,15 +14,16 @@ const routeNames = {
 
 function AdminLayout() {
   const location = useLocation();
+  const [searchTerm, setSearchTerm] = useState('');
   const routeInfo = routeNames[location.pathname] || { name: 'Dashboard', icon: 'dashboard', placeholder: '', showSearch: true };
 
   return (
     <>
-      <Header routeInfo={routeInfo} />
+      <Header routeInfo={routeInfo} searchTerm={searchTerm} onSearchChange={setSearchTerm} />
       <div className="flex">
         <Sidebar />
         <div className="flex-1 ml-64 mt-16 p-10 overflow-auto">
-          <Outlet />
+          <Outlet context={{ searchTerm }} />
         </div>
       </div>
     </>

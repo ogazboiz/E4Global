@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useOutletContext } from 'react-router-dom';
 
 const Inventorys = () => {
   const [orders, setOrders] = useState([]);
@@ -7,6 +8,7 @@ const Inventorys = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [customerCount, setCustomerCount] = useState(0);
+  const { searchTerm } = useOutletContext();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -19,14 +21,12 @@ const Inventorys = () => {
           : [];
         setOrders(fetchedOrders);
         
-        // Fetch customers after orders are fetched
         const customersResponse = await axios.get(
           "https://e4-global-backend.onrender.com/api/v1/customer/"
         );
         const fetchedCustomers = customersResponse.data.data;
         setCustomers(fetchedCustomers);
 
-        const customersSet = new Set(fetchedOrders.map(order => order.customerId));
         setCustomerCount(customersResponse.data.data.length);
         setLoading(false);
       } catch (error) {
@@ -47,7 +47,7 @@ const Inventorys = () => {
     
     try {
       await axios.put(
-        "https://e4-global-backend.onrender.com/api/v1/shipment/${orderId}",
+        `https://e4-global-backend.onrender.com/api/v1/shipment/${orderId}`,
         { status: newStatus }
       );
       setOrders((prevOrders) =>
@@ -61,11 +61,21 @@ const Inventorys = () => {
     }
   };
 
-  // Helper function to get phone number by customer ID
   const getPhoneNumber = (customerId) => {
     const customer = customers.find(c => c.customerId === customerId);
-    return customer ? customer.phoneNumber : "";
+    return customer ? customer.phoneNumber.toString() : "";
   };
+
+  const filteredOrders = orders.filter(order => {
+    const phoneNumber = getPhoneNumber(order.customerId);
+    return (
+      order.orderId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.customerId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.dropLocation.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.recipientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      phoneNumber.includes(searchTerm)
+    );
+  });
 
   return (
     <div className="p-4">
@@ -116,7 +126,7 @@ const Inventorys = () => {
                 </tr>
               </thead>
               <tbody className="text-center">
-                {orders.map((order) => (
+                {filteredOrders.map((order) => (
                   <tr key={order._id}>
                     <td className="px-4 py-2 border-b border-gray-200">{order.orderId}</td>
                     <td className="px-4 py-2 border-b border-gray-200">{order.customerId}</td>
