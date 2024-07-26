@@ -8,7 +8,7 @@ const routeNames = {
   '/admin/customer': { name: 'Customers', icon: 'people', placeholder: 'search customer', showSearch: true },
   '/admin/order': { name: 'Generate Order', icon: 'shopping_cart', placeholder: '', showSearch: false },
   '/admin/inventory': { name: 'Inventory', icon: 'inventory', placeholder: 'search inventory', showSearch: true },
-  '/admin/tracking': { name: 'Tracking', icon: 'local_shipping', placeholder: '', showSearch: false },
+  '/admin/tracking': { name: 'Tracking', icon: 'local_shipping', placeholder: '', showSearch: true },
   '/admin/logout': { name: 'Log Out', icon: 'logout', placeholder: '', showSearch: false },
 };
 
@@ -22,7 +22,7 @@ function AdminLayout() {
       <Header routeInfo={routeInfo} searchTerm={searchTerm} onSearchChange={setSearchTerm} />
       <div className="flex">
         <Sidebar />
-        <div className="flex-1 ml-64 mt-16 p-10 overflow-auto">
+        <div className="flex-1 p-10 mt-16 ml-64 overflow-auto">
           <Outlet context={{ searchTerm }} />
         </div>
       </div>
