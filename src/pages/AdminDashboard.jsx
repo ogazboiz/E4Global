@@ -15,6 +15,7 @@ const AdminDashboard = () => {
     intransit: 0,
   });
   const [fetchedOrders, setFetchedOrders] = useState([]);
+  const [loading, setLoading] = useState(true); // Add a loading state
 
   const { searchTerm } = useOutletContext();
 
@@ -43,6 +44,8 @@ const AdminDashboard = () => {
         setShipmentStats(stats);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
+      } finally {
+        setLoading(false); // Set loading to false after data is fetched
       }
     };
 
@@ -55,6 +58,15 @@ const AdminDashboard = () => {
     (transaction.customerId && transaction.customerId.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (transaction.customerName && transaction.customerName.toLowerCase().includes(searchTerm.toLowerCase()))
   );
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-xl">Loading...</div>
+        {/* You can also use a loading spinner component here */}
+      </div>
+    );
+  }
 
   return (
     <div className="flex">
@@ -71,7 +83,7 @@ const AdminDashboard = () => {
               </div>
               <div className="p-4 bg-white rounded shadow-md">
                 <div className="text-3xl font-bold">{ordersCount}</div>
-                <div>Orders in Transit</div>
+                <div>Orders</div>
               </div>
               <div className="p-4 bg-white rounded shadow-md">
                 <div className="text-3xl font-bold">{inventoryCount}</div>

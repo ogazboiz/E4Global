@@ -79,7 +79,10 @@ const Inventorys = () => {
 
   return (
     <div className="p-4">
-      {loading && <p className="text-center">Loading...</p>}
+      {loading &&  <div className="flex justify-center items-center min-h-screen">
+      <div className="text-xl">Loading...</div>
+      {/* You can also use a loading spinner component here */}
+    </div>}
       {error && <p className="text-center text-red-600">{error}</p>}
       {!loading && !error && (
         <>

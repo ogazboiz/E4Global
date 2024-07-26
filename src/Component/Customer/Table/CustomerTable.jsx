@@ -7,6 +7,7 @@ const CustomerTable = () => {
   const [customers, setCustomers] = useState([]);
   const [orders, setOrders] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [customerStats, setCustomerStats] = useState({
     totalCustomers: 0,
     activeCustomers: 0,
@@ -29,6 +30,9 @@ const CustomerTable = () => {
         updateCustomerStats(fetchedCustomers, fetchedOrders);
       } catch (error) {
         console.error('Error fetching data:', error);
+      }
+      finally {
+        setLoading(false); // Set loading to false after data is fetched
       }
     };
 
@@ -59,7 +63,14 @@ const CustomerTable = () => {
 
     setCustomerStats({ totalCustomers, activeCustomers, inactiveCustomers });
   };
-
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-xl">Loading...</div>
+        {/* You can also use a loading spinner component here */}
+      </div>
+    );
+  }
   return (
     <div className="p-4">
       <CustomerStats
