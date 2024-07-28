@@ -20,15 +20,15 @@ const services = [
 
 const OurServices = () => {
   return (
-    <div className="py-12">
+    <div className="py-12 bg-gray-50">
       <div className="mb-10 text-center">
         <h2 className="text-3xl font-extrabold text-gray-900">Our Services</h2>
       </div>
-      <div className="flex justify-center space-x-4">
+      <div className="flex flex-wrap justify-center gap-8">
         {services.map((service, index) => (
           <div key={index} className="flex flex-col items-center max-w-sm p-6 bg-white rounded-lg shadow-md">
-            <div className='flex items-center gap-3 mb-4'>
-              <div className='w-20 h-20 bg-[#C07A1033] rounded-full flex items-center justify-center'>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-20 h-20 bg-[#C07A1033] rounded-full flex items-center justify-center">
                 <img src={service.icon} alt={service.title} className="w-16 h-16 p-2" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900">{service.title}</h3>
