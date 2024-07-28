@@ -16,9 +16,10 @@ const Inventorys = () => {
         const response = await axios.get(
           "https://e4-global-backend.onrender.com/api/v1/shipment/all"
         );
-        const fetchedOrders = Array.isArray(response.data.data.shipments)
+        let fetchedOrders = Array.isArray(response.data.data.shipments)
           ? response.data.data.shipments
           : [];
+        fetchedOrders = fetchedOrders.reverse(); // Reverse the fetched orders array
         setOrders(fetchedOrders);
         
         const customersResponse = await axios.get(
@@ -81,7 +82,6 @@ const Inventorys = () => {
     <div className="p-4">
       {loading &&  <div className="flex justify-center items-center min-h-screen">
       <div className="text-xl">Loading...</div>
-      {/* You can also use a loading spinner component here */}
     </div>}
       {error && <p className="text-center text-red-600">{error}</p>}
       {!loading && !error && (
