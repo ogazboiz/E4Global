@@ -21,6 +21,7 @@ export default defineConfig({
         description: 'A Progressive Web App for E4 Global',
         theme_color: '#ffffff',
         start_url: '/',
+        display: "standalone",
         icons: [
           {
             src: '/android-chrome-192x192.png',

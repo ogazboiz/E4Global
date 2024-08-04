@@ -16,6 +16,10 @@ import Tracking from './pages/Tracking';
 import Logout from './pages/Logout';
 import PrivateRoute from './Component/PrivateRoute';
 import AddCustomerForm from './Component/Customer/Table/AddCustomerForm';
+import LogisticsServices from './pages/LogisticsServices';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Faq from './pages/Faq';
 // import AddCustomerForm from './pages/AddCustomerForm';
 
 function App() {
@@ -37,6 +41,10 @@ function App() {
         <Routes>
           <Route path='/' element={<RootLayout />}>
             <Route index element={<Home />} />
+            <Route path='/services' element={<LogisticsServices/>} />
+            <Route path='/about' element={<About/>} />
+            <Route path='/contact' element={<Contact/>} />
+            <Route path='/faq' element={<Faq/>} />
           </Route>
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path='/admin' element={<AdminLayout />}>

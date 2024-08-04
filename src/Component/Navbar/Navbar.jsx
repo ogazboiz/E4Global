@@ -47,16 +47,16 @@ function Navbar() {
         <nav>
           <ul className="flex flex-col mt-4 space-y-2 md:flex-row md:space-y-0 md:space-x-10 md:mt-0">
             <li>
-              <NavLink to="/" className="font-bold transition-all hover:underline hover:text-slate-900"> Services </NavLink>
+              <NavLink to="/services" className="font-bold transition-all hover:underline hover:text-slate-900"> Services </NavLink>
             </li>
             <li>
               <NavLink to="/about" className="font-bold transition-all hover:underline hover:text-slate-900"> About Us </NavLink>
             </li>
             <li>
-              <NavLink to="/services" className="font-bold transition-all hover:underline hover:text-slate-900"> Contact Us </NavLink>
+              <NavLink to="/contact" className="font-bold transition-all hover:underline hover:text-slate-900"> Contact Us </NavLink>
             </li>
             <li>
-              <NavLink to="/product" className="font-bold transition-all hover:underline hover:text-slate-900"> FAQs </NavLink>
+              <NavLink to="/faq" className="font-bold transition-all hover:underline hover:text-slate-900"> FAQs </NavLink>
             </li>
             
           </ul>
