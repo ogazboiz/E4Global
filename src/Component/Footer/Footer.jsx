@@ -1,4 +1,8 @@
-import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { MdOutlineMailOutline } from "react-icons/md";
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <footer className="relative bg-white">
@@ -9,59 +13,67 @@ function Footer() {
       ></div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-[#FE9F11] opacity-50"></div>
+      <div className="absolute inset-0 bg-[#FE9F11] opacity-60"></div>
 
       {/* Content */}
-      <div className="relative max-w-screen-xl px-4 pt-16 pb-8 mx-auto sm:px-6 lg:px-8">
-        <div className="flex flex-col mt-16 lg:flex-row lg:justify-between lg:items-center">
-          {/* Centered Content */}
-          <div>
-            
-          </div>
-          <div className="flex flex-col items-center flex-1 lg:items-start">
-            <div className="mb-8 text-center lg:text-left lg:mb-0">
-          
-              <ul className="mt-6 space-y-1">
-                <li>
-                  <a
-                    className="text-white transition hover:text-gray-200"
-                    href="#"
-                  >
-                    Service
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="text-white transition hover:text-gray-200"
-                    href="#"
-                  >
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="text-white transition hover:text-gray-200"
-                    href="#"
-                  >
-                    Contact Us
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="text-white transition hover:text-gray-200"
-                    href="#"
-                  >
-                    FAQs
-                  </a>
-                </li>
-              </ul>
+      <div className="relative max-w-screen-xl px-4 pt-16 pb-8 mx-auto sm:px-6 lg:px-20">
+        <div className="flex flex-col space-y-8 lg:flex-row lg:justify-between lg:items-center lg:space-y-0">
+          {/* Contact Info */}
+          <div className="flex flex-col items-center space-y-4 text-center lg:text-left lg:items-start">
+            <div className="flex items-center gap-4 text-white">
+              <MdOutlineMailOutline className="text-3xl" />
+              <div className="text-base">
+                <p>EMAIL: info@e4glogistics.com</p>
+                <p>CEO Email: akannjiedris@e4glogistics.com</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 text-white">
+              <FaLocationDot className="text-3xl" />
+              <p className="text-base">Douala, Cameroon</p>
             </div>
           </div>
 
-          <div className="flex flex-col items-center flex-1 lg:items-start">
-            <div className="mb-8 text-center lg:text-left lg:mb-0">
-            
-              <ul className="mt-6 space-y-1">
+          {/* Navigation Links */}
+          <div className="flex flex-col space-y-8 sm:mb-10 lg:flex-row lg:space-x-16 lg:space-y-0 ">
+            <div className="text-center lg:text-left">
+              <ul className="space-y-1">
+                <li>
+                  <Link
+                    className="text-white transition hover:text-gray-200"
+                    to="/service"
+                  >
+                    Service
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-white transition hover:text-gray-200"
+                    to="/about"
+                  >
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-white transition hover:text-gray-200"
+                    to="/contact"
+                  >
+                    Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-white transition hover:text-gray-200"
+                    to="/faq"
+                  >
+                    FAQs
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div></div>
+            <div className="text-center lg:text-left sm:">
+              <ul className="space-y-1">
                 <li>
                   <a
                     className="text-white transition hover:text-gray-200"
@@ -86,63 +98,38 @@ function Footer() {
                     Cookie Policy
                   </a>
                 </li>
-              
               </ul>
             </div>
           </div>
 
-          <div className="flex flex-col items-center flex-1 lg:items-start">
-            <div className="mb-8 text-center lg:text-left lg:mb-0">
-              <strong className="font-medium text-white">Follow Our Socials:</strong>
-              <ul className="flex gap-6 mt-6 space-y-1">
-                <li>
-                  <a
-                    className="text-white transition hover:text-gray-200"
-                    href="#"
-                  >
-                    <FaFacebook className="text-4xl text-blue-500" />
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="text-white transition hover:text-gray-200"
-                    href="#"
-                  >
-                    <FaInstagram className="text-4xl text-blue-500" />
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="text-white transition hover:text-gray-200"
-                    href="#"
-                  >
-                    <FaTwitter className="text-4xl text-blue-500" />
-                  </a>
-                </li>
-              </ul>
-            </div>
+          {/* Social Media Links */}
+          <div className="text-center lg:text-left">
+            <strong className="font-medium text-white">
+              Follow Our Socials:
+            </strong>
+            <ul className="flex justify-center gap-6 mt-4 lg:justify-start">
+              <li>
+                <a className="transition hover:text-gray-200" href="#">
+                  <FaFacebook className="text-3xl text-blue-500" />
+                </a>
+              </li>
+              <li>
+                <a className="transition hover:text-gray-200" href="#">
+                  <FaInstagram className="text-3xl text-pink-500" />
+                </a>
+              </li>
+              <li>
+                <a className="transition hover:text-gray-200" href="#">
+                  <FaTwitter className="text-3xl text-blue-400" />
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="pt-8 mt-16 border-t border-gray-100">
+        <div className="pt-8 mt-8 ">
           <p className="text-center text-gray-300 text-xs/relaxed">
-            © Company 2024. All rights reserved.
-            <br />
-            Created with
-            <a
-              href="#"
-              className="text-white underline transition hover:text-gray-200"
-            >
-              Laravel
-            </a>
-            and
-            <a
-              href="#"
-              className="text-white underline transition hover:text-gray-200"
-            >
-              Laravel Livewire
-            </a>
-            .
+            © 2024 Copyright @ E4 global logistics | All rights reserved.
           </p>
         </div>
       </div>

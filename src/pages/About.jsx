@@ -2,6 +2,7 @@ import hannns from '../assets/Images/hands.png'
 
 const About = () => {
   return (
+    <div className="pt-10">
     <div className="p-8 mx-auto my-8 bg-gradient-to-b from-[#C07A1033] to-[#C07A1033] rounded-lg">
       <div className="w-full p-6  bg-white rounded-tl-3xl rounded-tr-3xl rounded-bl-3xl shadow-md lg:w-[900px]">
         <h2 className="mb-4 text-2xl font-bold text-orange-500">Our Vision</h2>
@@ -35,6 +36,7 @@ const About = () => {
           their needs.
         </p>
       </div>
+    </div>
     </div>
   );
 };

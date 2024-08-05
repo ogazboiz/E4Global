@@ -2,6 +2,7 @@ import hannns from "../assets/Images/contact.png";
 
 function Contact() {
   return (
+    <div className="pt-10">
     <div className="relative  p-8 mx-auto my-8 bg-gradient-to-b from-[#C07A1033] to-[#C07A1033] rounded-lg lg:h-[700px]">
       <img src={hannns} alt="Vision" className="w-full h-auto max-h-[400px] object-cover md:absolute lg:w-[900px]" />
       <div className="relative md:top-[250px] p-6 bg-white mx-auto mt-8 md:mt-0 md:ml-[70%] md:transform md:-translate-x-1/2 rounded-br-3xl rounded-tr-3xl rounded-bl-3xl shadow-md w-full md:w-[700px]">
@@ -19,6 +20,7 @@ function Contact() {
           </ul>
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -43,55 +43,56 @@ const LogisticsServices = () => {
   ];
 
   return (
-    <div className="p-8 bg-gradient-to-b from-[#C07A1033] to-[#C07A1033]">
-      <div className="mx-auto max-w-7xl">
-       
-        {services.map((service, index) => (
-          <section
-            key={index}
-            className={`mb-8 overflow-hidden bg-gray-50 sm:grid sm:grid-cols-2 sm:items-center ${
-              index % 2 !== 0 ? "sm:flex-row-reverse" : ""
-            }`}
-          >
-            {index % 2 === 0 ? (
-              <>
-                <div className="p-8 md:p-12 lg:px-16 lg:py-24">
-                  <div className="max-w-xl mx-auto text-center ltr:sm:text-left rtl:sm:text-right">
-                    <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">
-                      {service.title}
-                    </h2>
-                    <p className="hidden text-gray-500 md:mt-4 md:block">
-                      {service.description}
-                    </p>
+    <div className="pt-10">
+      <div className="p-8 bg-gradient-to-b from-[#C07A1033] to-[#C07A1033]">
+        <div className="mx-auto max-w-7xl">
+          {services.map((service, index) => (
+            <section
+              key={index}
+              className={`mb-8 overflow-hidden bg-gray-50 sm:grid sm:grid-cols-2 sm:items-center ${
+                index % 2 !== 0 ? "sm:flex-row-reverse" : ""
+              }`}
+            >
+              {index % 2 === 0 ? (
+                <>
+                  <div className="p-8 md:p-12 lg:px-16 lg:py-24">
+                    <div className="max-w-xl mx-auto text-center ltr:sm:text-left rtl:sm:text-right">
+                      <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">
+                        {service.title}
+                      </h2>
+                      <p className="hidden text-gray-500 md:mt-4 md:block">
+                        {service.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <img
-                  alt={service.title}
-                  src={service.imageUrl}
-                  className="h-full w-full object-cover sm:h-[calc(100%_-_2rem)] sm:self-end sm:rounded-ss-[30px] md:h-[calc(100%_-_4rem)] md:rounded-ss-[60px]"
-                />
-              </>
-            ) : (
-              <>
-                <img
-                  alt={service.title}
-                  src={service.imageUrl}
-                  className="h-full w-full object-cover sm:h-[calc(100%_-_2rem)] sm:self-end sm:rounded-ss-[30px] md:h-[calc(100%_-_4rem)] md:rounded-ss-[60px]"
-                />
-                <div className="p-8 md:p-12 lg:px-16 lg:py-24">
-                  <div className="max-w-xl mx-auto text-center ltr:sm:text-left rtl:sm:text-right">
-                    <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">
-                      {service.title}
-                    </h2>
-                    <p className="hidden text-gray-500 md:mt-4 md:block">
-                      {service.description}
-                    </p>
+                  <img
+                    alt={service.title}
+                    src={service.imageUrl}
+                    className="h-full w-full object-cover sm:h-[calc(100%_-_2rem)] sm:self-end sm:rounded-ss-[30px] md:h-[calc(100%_-_4rem)] md:rounded-ss-[60px]"
+                  />
+                </>
+              ) : (
+                <>
+                  <img
+                    alt={service.title}
+                    src={service.imageUrl}
+                    className="h-full w-full object-cover sm:h-[calc(100%_-_2rem)] sm:self-end sm:rounded-ss-[30px] md:h-[calc(100%_-_4rem)] md:rounded-ss-[60px]"
+                  />
+                  <div className="p-8 md:p-12 lg:px-16 lg:py-24">
+                    <div className="max-w-xl mx-auto text-center ltr:sm:text-left rtl:sm:text-right">
+                      <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">
+                        {service.title}
+                      </h2>
+                      <p className="hidden text-gray-500 md:mt-4 md:block">
+                        {service.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </>
-            )}
-          </section>
-        ))}
+                </>
+              )}
+            </section>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -61,6 +61,7 @@ const FAQ = () => {
   ];
 
   return (
+    <div className="pt-10">
     <div className="p-8 mx-auto my-8 bg-gradient-to-b from-[#C07A1033] to-[#C07A1033] rounded-lg">
       <div className="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow-md">
         <img src={imageSrc} alt="FAQ" className="w-full h-auto mb-6 rounded" />
@@ -82,6 +83,7 @@ const FAQ = () => {
           ))}
         </div>
       </div>
+    </div>
     </div>
   );
 };

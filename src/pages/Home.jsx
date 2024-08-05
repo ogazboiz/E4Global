@@ -6,7 +6,7 @@ import UserSay from "../Component/Body/UserSay/UserSay";
 
 function Home() {
   return (
-    <div>
+    <div className="pt-14"> 
       <Hero />
       <OurServices />
       <UserSay />
