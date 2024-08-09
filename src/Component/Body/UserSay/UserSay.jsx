@@ -36,14 +36,13 @@ function UserSay() {
                   Miracle Kenter
                 </p>
                 <p className="mt-0.5 text-base font-medium text-gray-900">
-                  Zaria, Nigeria
+                  Douala, Cameroon
                 </p>
               </div>
             </div>
 
             <p className="mt-4 text-gray-700">
-              I have been using the platform for a while now and I must say it
-              has been a great experience.
+              `Vert nice customer service`
             </p>
           </blockquote>
 
@@ -80,8 +79,7 @@ function UserSay() {
             </div>
 
             <p className="mt-4 text-gray-700">
-              I have been using the platform for a while now and I must say it
-              has been a great experience.
+             `Delivery is so fast`
             </p>
           </blockquote>
 
@@ -95,7 +93,7 @@ function UserSay() {
 
               <div>
                 <div className="flex justify-center gap-0.5 text-[#FE9F11]">
-                  {[...Array(5)].map((_, i) => (
+                  {[...Array(4)].map((_, i) => (
                     <svg
                       key={i}
                       xmlns="http://www.w3.org/2000/svg"
@@ -112,14 +110,13 @@ function UserSay() {
                   Ann Botosh
                 </p>
                 <p className="mt-0.5 text-base font-medium text-gray-900">
-                  Lagos, Nigeria
+                  Accra, Ghana
                 </p>
               </div>
             </div>
 
             <p className="mt-4 text-gray-700">
-              I have been using the platform for a while now and I must say it
-              has been a great experience.
+              `The best logistics company so far`
             </p>
           </blockquote>
         </div>
