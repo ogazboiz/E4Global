@@ -1,11 +1,10 @@
+import React from 'react';
 import OrderDetails from "../Component/Track/OrderDetails";
-import MapComponent from "../Component/Map/Map";
 
 function Tracking() {
   return (
     <div className="mt-8">
-      <OrderDetails />
-    
+      <OrderDetails shipmentId="1495024613" />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext } from "react-router-dom";
 
 const Inventorys = () => {
   const [orders, setOrders] = useState([]);
@@ -21,7 +21,7 @@ const Inventorys = () => {
           : [];
         fetchedOrders = fetchedOrders.reverse(); // Reverse the fetched orders array
         setOrders(fetchedOrders);
-        
+
         const customersResponse = await axios.get(
           "https://e4-global-backend.onrender.com/api/v1/customer/"
         );
@@ -45,7 +45,7 @@ const Inventorys = () => {
       alert("Invalid status value");
       return;
     }
-    
+
     try {
       await axios.put(
         `https://e4-global-backend.onrender.com/api/v1/shipment/${orderId}`,
@@ -63,11 +63,11 @@ const Inventorys = () => {
   };
 
   const getPhoneNumber = (customerId) => {
-    const customer = customers.find(c => c.customerId === customerId);
+    const customer = customers.find((c) => c.customerId === customerId);
     return customer ? customer.phoneNumber.toString() : "";
   };
 
-  const filteredOrders = orders.filter(order => {
+  const filteredOrders = orders.filter((order) => {
     const phoneNumber = getPhoneNumber(order.customerId);
     return (
       order.orderId.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -80,9 +80,11 @@ const Inventorys = () => {
 
   return (
     <div className="p-4">
-      {loading &&  <div className="flex justify-center items-center min-h-screen">
-      <div className="text-xl">Loading...</div>
-    </div>}
+      {loading && (
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="text-xl">Loading...</div>
+        </div>
+      )}
       {error && <p className="text-center text-red-600">{error}</p>}
       {!loading && !error && (
         <>
@@ -112,7 +114,7 @@ const Inventorys = () => {
               </p>
             </div>
           </div>
-          <div className="overflow-hidden bg-white rounded-lg shadow">
+          <div className="overflow-x-auto bg-white rounded-lg shadow">
             <table className="min-w-full bg-white">
               <thead>
                 <tr>
@@ -131,19 +133,39 @@ const Inventorys = () => {
               <tbody className="text-center">
                 {filteredOrders.map((order) => (
                   <tr key={order._id}>
-                    <td className="px-4 py-2 border-b border-gray-200">{order.orderId}</td>
-                    <td className="px-4 py-2 border-b border-gray-200">{order.customerId}</td>
-                    <td className="px-4 py-2 border-b border-gray-200">{order.dropLocation}</td>
-                    <td className="px-4 py-2 border-b border-gray-200">{order.recipientName}</td>
-                    <td className="px-4 py-2 border-b border-gray-200">{getPhoneNumber(order.customerId)}</td>
-                    <td className="px-4 py-2 border-b border-gray-200">{order.totalWeight}</td>
-                    <td className="px-4 py-2 border-b border-gray-200">{order.declaredValue}</td>
-                    <td className="px-4 py-2 border-b border-gray-200">{order.orderDescription.descriptionOfContents}</td>
-                    <td className="px-4 py-2 border-b border-gray-200">{new Date(order.shipmentDate).toLocaleDateString()}</td>
+                    <td className="px-4 py-2 border-b border-gray-200">
+                      {order.orderId}
+                    </td>
+                    <td className="px-4 py-2 border-b border-gray-200">
+                      {order.customerId}
+                    </td>
+                    <td className="px-4 py-2 border-b border-gray-200">
+                      {order.dropLocation}
+                    </td>
+                    <td className="px-4 py-2 border-b border-gray-200">
+                      {order.recipientName}
+                    </td>
+                    <td className="px-4 py-2 border-b border-gray-200">
+                      {getPhoneNumber(order.customerId)}
+                    </td>
+                    <td className="px-4 py-2 border-b border-gray-200">
+                      {order.totalWeight}
+                    </td>
+                    <td className="px-4 py-2 border-b border-gray-200">
+                      {order.declaredValue}
+                    </td>
+                    <td className="px-4 py-2 border-b border-gray-200">
+                      {order.orderDescription.descriptionOfContents}
+                    </td>
+                    <td className="px-4 py-2 border-b border-gray-200">
+                      {new Date(order.shipmentDate).toLocaleDateString()}
+                    </td>
                     <td className="px-4 py-2 border-b border-gray-200">
                       <select
                         value={order.status}
-                        onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                        onChange={(e) =>
+                          handleStatusChange(order._id, e.target.value)
+                        }
                         className="px-2 py-1 border border-gray-300 rounded"
                       >
                         <option value="pending">Pending</option>
