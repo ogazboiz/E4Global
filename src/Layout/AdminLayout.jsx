@@ -8,7 +8,7 @@ const routeNames = {
   '/admin/customer': { name: 'Customers', icon: 'people', placeholder: 'search customer', showSearch: true },
   '/admin/order': { name: 'Generate Order', icon: 'shopping_cart', placeholder: '', showSearch: false },
   '/admin/inventory': { name: 'Inventory', icon: 'inventory', placeholder: 'search inventory', showSearch: true },
-  '/admin/tracking': { name: 'Tracking', icon: 'local_shipping', placeholder: '', showSearch: true },
+  '/admin/tracking': { name: 'Tracking', icon: 'local_shipping', placeholder: '', showSearch: false },
   '/admin/logout': { name: 'Log Out', icon: 'logout', placeholder: '', showSearch: false },
 };
 

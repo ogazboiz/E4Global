@@ -15,6 +15,7 @@ function AdminLogin() {
 
   const handleLogin = async () => {
     setLoading(true); // Start loading
+    setError(''); // Reset error message
     try {
       const response = await axios.post("https://e4-global-backend.onrender.com/api/v1/auth/login", {
         email,
@@ -31,7 +32,12 @@ function AdminLogin() {
         setError('Invalid response from server');
       }
     } catch (error) {
-      setError('Invalid email or password');
+      // Check for network error or other issues
+      if (!error.response) {
+        setError('No network connection. Please check your internet connection.');
+      } else {
+        setError('Invalid email or password');
+      }
     } finally {
       setLoading(false); // Stop loading after request completes
     }
